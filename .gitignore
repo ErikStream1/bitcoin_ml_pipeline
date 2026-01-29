@@ -1,5 +1,13 @@
 notebooks/*.ipynb
 
+# Data
+data/
+*.csv
+
+# Models
+*.pkl
+*.joblib
+
 # Python cache
 __pycache__/
 *.pyc
