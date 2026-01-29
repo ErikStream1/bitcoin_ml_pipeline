@@ -11,7 +11,7 @@ def build_model(cfg : ConfigLike) -> ModelLike:
     params = act_model.get("params", {})
     model = ""
     if model_type == "linear_regression":
-        model = LinearModel(alpha = params)
+        model = LinearModel(**params)
     
     elif model_type == "xgboost":
         model = XGBoostModel(params = params)
