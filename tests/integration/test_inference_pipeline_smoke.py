@@ -1,5 +1,4 @@
 import pytest
-from typing import Any
 
 import numpy as np
 from pathlib import Path
