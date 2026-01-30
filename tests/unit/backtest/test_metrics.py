@@ -54,7 +54,7 @@ def test_turnover_from_position(data_pos:VectorLike):
     result = turnover_from_position(position_qty=position_qty)
     assert isinstance(result, float)
 
-    if position_qty.sum() == 0:
+    if position_qty.diff().abs().sum() == 0:
         assert result == 0.0
     else:
         assert result != 0.0
