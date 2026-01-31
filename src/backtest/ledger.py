@@ -1,10 +1,13 @@
 from __future__ import annotations
 
+import logging
 import pandas as pd
 from dataclasses import dataclass
 
 from src.types import ConfigLike, IndexLike, VectorLike, SeriesLike, FrameLike
 from src.execution import OrderSide, FillVectorLike
+
+logger = logging.getLogger(__name__)
 
 @dataclass
 class LedgerResult:
@@ -76,6 +79,10 @@ def run_ledger(
                     position_qty = pos.loc[idx]
                     sell_qty = min(qty, position_qty)
                     if sell_qty <= 0:
+                        logger.debug(
+                            "Reject SELL (no inventory). ts=%s requested_qty=%.6f position_qty=%.6f",
+                            idx, qty, position_qty
+                            )
                         continue
                     
                     notional = sell_qty * price
@@ -95,6 +102,7 @@ def run_ledger(
                 else:
                     pos.loc[idx] = pos.loc[prev_idx]
                     cash.loc[idx] = cash.loc[prev_idx]
+    
     mask = pos.eq(0)
     trades = fills_df.loc[~mask]
             
