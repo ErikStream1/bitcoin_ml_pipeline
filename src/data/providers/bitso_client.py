@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from typing import Any
-from src.data.quotes.types import BitsoConfig, BitsoError
+from src.data.types import BitsoConfig, BitsoError
 from datetime import datetime, timezone
 from decimal import Decimal
 from src.models.types import paramsLike, payloadLike

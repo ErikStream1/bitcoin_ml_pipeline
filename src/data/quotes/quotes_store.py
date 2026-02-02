@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from datetime import datetime, timezone
 from pathlib import Path
-from src.data.quotes.types import QuoteSnapshot
+from src.data.types import QuoteSnapshot
 
 from src.types import PathLike
 import pandas as pd
