@@ -6,18 +6,19 @@ from datetime import datetime, timezone
 
 from src.data import (BitsoClient,
                       QuoteSnapshot,
-                      QuoteStore)
+                      QuoteStore,
+                      CollectQuotesConfig)
 
 from src.types import ConfigLike
 
 logger = logging.getLogger(__name__)
 
 
-def _collect_ticker_rest(cfg:ConfigLike, client:BitsoClient, store:QuoteStore)->None:
-    quotes_cfg = cfg["quotes"]
-    book = quotes_cfg["book"]
-    flush_every_n = quotes_cfg.get("flush_every_n", 200)
-    poll_interval_s = quotes_cfg.get("poll_interval_s", 2.0)
+def _collect_ticker_rest(cqc_obj:CollectQuotesConfig, client:BitsoClient, store:QuoteStore)->None:
+
+    book = cqc_obj.book
+    flush_every_n = cqc_obj.flush_every_n
+    poll_interval_s = cqc_obj.poll_interval_s
     
     buffer: list[QuoteSnapshot] = []
     logger.debug("Starting ticker_rest collector for book= %s", book)
@@ -44,11 +45,25 @@ def collect_quotes(cfg: ConfigLike):
     quotes_cfg = cfg["quotes"]
     client_cfg = cfg["client"]
     
+    book = quotes_cfg["book"]
+    mode = quotes_cfg["mode"]
+    poll_interval_s = quotes_cfg["poll_interval_s"]
+    flush_every_n = quotes_cfg["flush_every_n"]
+    out_dir = quotes_cfg["out_dir"]
+    
+    c = CollectQuotesConfig(
+        book = book,
+        mode = mode,
+        poll_interval_s=poll_interval_s,
+        flush_every_n=flush_every_n,
+        out_dir=out_dir
+        )
+    
     store = QuoteStore(out_dir = quotes_cfg["out_dir"] or "data/quotes")
-    client = BitsoClient(cfg = client_cfg or None)
+    client = BitsoClient(cfg = client_cfg)
     
     if quotes_cfg["mode"] == "ticker_rest":
-        _collect_ticker_rest(cfg = cfg, 
+        _collect_ticker_rest(cqc_obj = c, 
                              client = client, 
                              store = store)
- 
+        return
