@@ -33,6 +33,7 @@ class QuoteStore:
         out_path = part_dir / fname
         
         for r in rows:
+            
             df = pd.DataFrame({
                     "ts_exchange": to_utc(r.ts_exchange),
                     "ts_local": to_utc(r.ts_local),
@@ -40,9 +41,9 @@ class QuoteStore:
                     "ask": float(r.ask),
                     "bid": float(r.bid),
                     "source": r.source, 
-            })
+            }, index = [1,2,3,4,5,6])
             
         df.sort_values("ts_exchange").reset_index(drop = True)
-        
         df.to_parquet(out_path, index = False)
+        
         return out_path
