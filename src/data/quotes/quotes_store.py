@@ -32,16 +32,18 @@ class QuoteStore:
         fname = f"quotes_{now}_{len(rows)}.parquet"
         out_path = part_dir / fname
         
-        for r in rows:
-            
-            df = pd.DataFrame({
-                    "ts_exchange": to_utc(r.ts_exchange),
-                    "ts_local": to_utc(r.ts_local),
+        data: list[dict] = []
+        
+        for r in rows:   
+            data.append({
+                "ts_exchange": to_utc(r.ts_exchange),
                     "book": r.book,
                     "ask": float(r.ask),
                     "bid": float(r.bid),
                     "source": r.source, 
-            }, index = [1,2,3,4,5,6])
+            })
+        
+        df = pd.DataFrame.from_records(data, index = (range(len(rows))))
             
         df.sort_values("ts_exchange").reset_index(drop = True)
         df.to_parquet(out_path, index = False)
