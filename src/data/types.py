@@ -14,7 +14,6 @@ class BitsoError(RuntimeError):
 @dataclass(frozen = True)
 class QuoteSnapshot:
     ts_exchange: datetime
-    ts_local: datetime
     book: str
     ask: float
     bid: float
