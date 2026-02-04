@@ -2,7 +2,6 @@ from __future__ import annotations
 
 import logging
 import time
-from datetime import datetime, timezone
 
 from src.data import (BitsoClient,
                       QuoteSnapshot,
@@ -24,11 +23,9 @@ def _collect_ticker_rest(cqc_obj:CollectQuotesConfig, client:BitsoClient, store:
     logger.debug("Starting ticker_rest collector for book= %s", book)
     
     while True:
-        ts_local = datetime.now(timezone.utc)
         ts_ex, bid, ask = client.get_best_bid_ask_from_ticker(book)
         buffer.append(QuoteSnapshot(
             ts_exchange=ts_ex,
-            ts_local=ts_local,
             book = book,
             ask = float(ask),
             bid = float(bid),
@@ -38,7 +35,8 @@ def _collect_ticker_rest(cqc_obj:CollectQuotesConfig, client:BitsoClient, store:
         if len(buffer) >= flush_every_n:
             out_path = store.write_chunk(buffer)
             logger.debug("Wrote %d quotes -> %s", len(buffer), out_path)
-        
+            buffer.clear()
+            
         time.sleep(poll_interval_s)
             
 def collect_quotes(cfg: ConfigLike):
