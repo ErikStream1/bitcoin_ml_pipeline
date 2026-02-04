@@ -6,6 +6,3 @@ quotes:
   flush_every_n: 200
   out_dir: data/quotes
   timezone: UTC
-
-logging:
-  level: INFO
