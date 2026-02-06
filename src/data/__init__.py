@@ -2,13 +2,13 @@ from .types import (BitsoConfig,
                     BitsoError,
                     QuoteSnapshot,
                     QuoteSeries,
-                    CollectQuotesConfig)
+                    CollectQuotesConfig,
+                    QuotesInfo)
 
 from .providers.bitso_client import (_parse_dt_utc,
                                      BitsoClient)
 
-from .quotes.quotes_resolver import(load_quotes,
-                                    resolve_quotes_asof)
+from .quotes.quotes_resolver import(load_quotes,)
 
 from .quotes.quotes_store import (to_utc,
                                   QuoteStore)
@@ -24,10 +24,10 @@ __all__ = ["BitsoConfig",
            "QuoteSnapshot",
            "QuoteSeries",
            "CollectQuotesConfig",
+           "QuotesInfo",
            "_parse_dt_utc",
            "BitsoClient",
            "load_quotes",
-           "resolve_quotes_asof",
            "to_utc",
            "QuoteStore",
            "_collect_ticker_rest",
