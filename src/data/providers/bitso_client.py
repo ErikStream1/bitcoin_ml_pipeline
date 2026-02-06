@@ -2,11 +2,10 @@ from __future__ import annotations
 
 from typing import Any
 
-from sklearn import base
-from src.data.types import BitsoConfig, BitsoError
+from src.data import BitsoConfig, BitsoError
 from datetime import datetime, timezone
 from decimal import Decimal
-from src.models.types import paramsLike, payloadLike
+from src.models import paramsLike, payloadLike
 from src.types import PathLike, ConfigLike
 import requests
 from tenacity import (retry,
