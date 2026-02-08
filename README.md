@@ -38,26 +38,21 @@ All following **software engineering**, **MLOps**, and **static typing** best pr
 ## Project Architecture
 
 ```text
-src/
-├── data/           # Data loading and preprocessing
-├── features/       # Feature engineering
-├── models/         # ML models (BaseModel, LinearModel, etc.)
-├── evaluation/     # Metrics (MAE, RMSE, Directional Accuracy)
-├── pipelines/      # Pipeline orchestrators
-├── validation/     # Walk-forward CV and metrics
-├── strategy/       # Trading signal rules (long / flat / short)
-├── backtest/       # PnL simulation, equity curve, metrics
-├── execution/      # (Future) live / simulated execution
-├── utils/          # Shared helpers
-└── config/         # YAML configuration files
-
-tests/
-├── unit/
-│   ├── models/
-│   ├── validation/
-│   └── features/
-├── integration/
-└── utils/
+    configs/            # YAML configuration files
+    docs/               # Project documentation
+    src/
+    ├── data/           # Data loading and preprocessing
+    ├── features/       # Feature engineering
+    ├── models/         # ML models (Ridge, XGBoost, etc.)
+    ├── evaluation/     # Metrics (MAE, RMSE, Directional Accuracy)
+    ├── pipelines/      # Pipeline orchestrators
+    ├── validation/     # Walk-forward CV and reporting
+    ├── strategy/       # Trading signal rules
+    ├── backtest/       # Ledger + PnL simulation + reports
+    └── utils/          # Shared helpers
+    tests/
+    ├── unit/
+    └── integration/
 
 requirements.txt
 README.md
@@ -70,15 +65,21 @@ README.md
 The project is **configuration-driven** using YAML files:
 
 ```yaml
-# training.yaml
+# models.yaml
 model:
   name: linear_ridge
   params:
     alpha: 1.0
-
-validation:
-  method: walk_forward
-  n_splits: 5
+```
+```yaml
+# training.yaml
+training:
+  random_seed: 42
+  split:
+    method: "walk_forward"
+    train_size: 250
+    test_size: 50
+    step_size: 50
 ```
 
 This enables:
@@ -146,7 +147,7 @@ This is an **ongoing project**, actively being extended and refined. Planned and
 ## Installation
 
 ```bash
-git clone https://github.com/your_username/bitcoin-ml-pipeline.git
+git clone https://github.com/ErikStream1/bitcoin-ml-pipeline.git
 cd bitcoin-ml-pipeline
 pip install -r requirements.txt
 ```
