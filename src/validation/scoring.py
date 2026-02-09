@@ -3,10 +3,10 @@ from __future__ import annotations
 from typing import  Any, Mapping
 from src.evaluation import rmse, mae, directional_accuracy
 from src.validation import SummaryLike,FoldMetricLike, FoldLike,GapSummaryLike
+from src.types import SeriesLike
 import numpy as np
-import pandas as pd
 
-def naive_persistence(y_true: pd.Series)->pd.Series:
+def naive_persistence(y_true: SeriesLike)->SeriesLike:
      return y_true.shift(1).dropna()
 
 def compute_score(
@@ -82,8 +82,8 @@ def summarize(
     for out in fold_outputs:
         
         fold:int = out["fold"]
-        y_true:pd.Series = out["y_true"]
-        y_pred:pd.Series = out["y_pred"]
+        y_true:SeriesLike = out["y_true"]
+        y_pred:SeriesLike = out["y_pred"]
     
         fm = {
                 "fold": fold,
