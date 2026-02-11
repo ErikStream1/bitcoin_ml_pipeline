@@ -4,7 +4,8 @@ strategy:
     enter_threshold: 0.002
     exit_threshold: 0.0
     cooldown_bars: 3
-    
+    volatility_column: "Volatility_7" #Volatility_N (where N is the desired period)
+
     volatility_filter:
         enabled: true
         max_vol: 0.05
