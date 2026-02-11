@@ -30,7 +30,7 @@ def simulate_fills_from_target_position(
     if not isinstance(target_position,pd.Series):
         target_position = pd.Series(target_position, dtype = int)
     
-    if not isinstance(volatility,pd.Series):
+    if not isinstance(volatility,pd.Series) and volatility is not None:
         volatility = pd.Series(volatility, dtype = float)
     
     exe_cfg = cfg["execution"]
