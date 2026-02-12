@@ -10,7 +10,9 @@ def fill_price_mid(mid: SeriesLike, t: int)->float:
     return float(mid.loc[t])
 
 def fill_price_bid_ask(bid: SeriesLike, ask: SeriesLike, side: str, t:int)->float:      
-    if side == "BUY":
+    side_ = side.upper()
+    
+    if side_ == "BUY":
         return float(ask.loc[t])
     
     return float(bid.loc[t])
