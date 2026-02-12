@@ -1,6 +1,6 @@
 from __future__ import annotations
 from typing import cast
-from src.types import ConfigLike, VectorLike, FrameLike
+from src.types import ConfigLike, VectorLike, FrameLike, SeriesLike
 import pandas as pd
 
 from src.execution import (
@@ -27,10 +27,10 @@ def simulate_fills_from_target_position(
     volatility: VectorLike | None = None
 )->FillVectorLike:
     
-    if not isinstance(target_position,pd.Series):
+    if not isinstance(target_position,SeriesLike):
         target_position = pd.Series(target_position, dtype = int)
     
-    if not isinstance(volatility,pd.Series) and volatility is not None:
+    if not isinstance(volatility,SeriesLike) and volatility is not None:
         volatility = pd.Series(volatility, dtype = float)
     
     exe_cfg = cfg["execution"]
