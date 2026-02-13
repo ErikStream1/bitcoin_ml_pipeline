@@ -15,4 +15,7 @@ def fill_price_bid_ask(bid: SeriesLike, ask: SeriesLike, side: str, t:int)->floa
     if side_ == "BUY":
         return float(ask.loc[t])
     
-    return float(bid.loc[t])
+    elif side_ == "SELL":
+        return float(bid.loc[t])
+    else:
+        raise ValueError("Invalid side")
