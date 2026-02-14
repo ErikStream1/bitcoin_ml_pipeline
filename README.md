@@ -139,11 +139,21 @@ This is an **ongoing project**, actively being extended and refined. Planned and
 * [x] Centralized logging infrastructure and error-handling policy
 * [x] Bitso market data (bid/ask): client + quote collector + storage
 * [x] Backtest pipeline
-* [in progress] Reproducible experiments and artifacts
-* [ ] Real-time simulation
+* [x] Reproducible experiments and artifacts
+* [in progress] Real-time simulation
 * [ ] Live broker integration (Bitso / API)
 ---
+### Reproducible experiments and artifacts
 
+Training runs now persist experiment bundles under `artifacts/experiments/<run_id>/` containing:
+
+* `metadata.json` (run id, UTC timestamp, model, seed, config hash)
+* `config_snapshot.json` (normalized config used in the run)
+* `metrics.json` (RMSE, MAE, directional accuracy on the training frame)
+* `manifest.json` (model artifact path + feature schema)
+* `feature_sample.csv` (first 200 rows of features for quick debugging)
+
+Enable/disable from `training.experiments.enabled` in `configs/training.yaml`.
 ## Installation
 
 ```bash
