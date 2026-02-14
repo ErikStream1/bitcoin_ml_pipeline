@@ -47,7 +47,7 @@ Typical artifacts locations:
     * `data/processed`
     * `data/quotes`
 * Artifacts:
-    * `artifacts/` (models, predictions)
+    * `artifacts/` (models, predictions, experiments)
 * Logs:
     * `logs printed to stdout`
 

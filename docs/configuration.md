@@ -127,7 +127,11 @@ training:
         model_filenames: 
             linear: "linear_model.joblib"
             xgboost: "xgboost_model.joblib"
-            
+
+    experiments:
+        enabled: true
+        output_dir: "artifacts/experiments"       
+         
     evaluation:
         primary_metric: "rmse"
 
