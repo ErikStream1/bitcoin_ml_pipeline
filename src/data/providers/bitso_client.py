@@ -39,7 +39,7 @@ class BitsoClient:
         reraise = True
     )
     def _get(self, path: Path, params: paramsLike = None,)->dict[str, Any]:
-        url = f"{self.obj.base_url}{path}"
+        url = f"{self.obj.base_url}/{path}"
         r = self._session.get(url, params = params, timeout=self.obj.timeout_s)
         r.raise_for_status
         data = r.json()
@@ -49,11 +49,11 @@ class BitsoClient:
         return data
     
     def list_available_books(self)->list[dict[str,Any]]:
-        data = self._get(Path("/available_books/"))
+        data = self._get(Path("available_books/"))
         return data["payload"]
     
     def get_ticker(self, book:str)->payloadLike:
-        data = self._get(Path("/ticker/"), params = {"book":book})
+        data = self._get(Path("ticker/"), params = {"book":book})
         return data["payload"]
     
     def get_best_bid_ask_from_ticker(self, book: str)->tuple[datetime, Decimal, Decimal]:

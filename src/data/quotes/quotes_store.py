@@ -24,7 +24,9 @@ class QuoteStore:
         book = rows[0].book
         date_str = to_utc(rows[0].ts_exchange).date().isoformat()
         
-        part_dir = self.out_dir/ f"book={book}" / f"date={date_str}"
+        part_dir = f"{self.out_dir}/book={book}/date={date_str}"
+        part_dir = Path(part_dir)
+        
         part_dir.mkdir(parents = True, exist_ok = True)
         
         now = datetime.now(timezone.utc).strftime("%Y%m%d_%H%M%S")
