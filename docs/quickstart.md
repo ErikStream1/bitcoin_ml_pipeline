@@ -50,4 +50,5 @@ Typical artifacts locations:
     * `artifacts/` (models, predictions, experiments)
 * Logs:
     * `logs printed to stdout`
+    * `logs/pipeline.log` (persisted file)
 

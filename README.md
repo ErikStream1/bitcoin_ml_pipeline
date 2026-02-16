@@ -88,6 +88,8 @@ This enables:
 * Reproducible experiments
 * Controlled and comparable runs
 
+Logging is also configurable in `configs/logging.yaml` and can be persisted to `logs/pipeline.log`.
+
 ---
 
 ## Typing & Code Quality
