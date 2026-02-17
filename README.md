@@ -1,6 +1,6 @@
-# Bitcoin ML Trading Pipeline
+# Reproducible ML Trading Pipeline
 
-A **Machine Learning + MLOps** project focused on **Bitcoin price prediction** and **trading strategy simulation**, with strong emphasis on clean architecture, static typing in Python, and time-aware validation.
+An end-to-end **Machine Learning + MLOps-style** project for **trading research and strategy simulation**, with strong emphasis on clean architecture, static typing in Python, and time-aware validation.
 
 > ⚠️ **Disclaimer**: This project is educational and experimental. It is **not** financial advice.
 
@@ -8,16 +8,16 @@ A **Machine Learning + MLOps** project focused on **Bitcoin price prediction** a
 
 ## Project Objective
 
-The goal of this project is to build a **reproducible, extensible, and well-engineered pipeline** that enables:
+The goal is to build a **reproducible, extensible, and well-engineered pipeline** that enables:
 
-* Financial data ingestion and preprocessing (BTC)
-* Technical feature engineering
-* Training predictive models (baseline and advanced)
-* Time-series validation using *walk-forward cross-validation*
-* Performance comparison against naive baselines
-* Trading signal simulation and metric evaluation
+- Market data ingestion and preprocessing *(initial implementation uses a single asset as an example)*
+- Technical feature engineering
+- Training predictive models (baseline and advanced)
+- Time-series validation using **walk-forward cross-validation**
+- Performance comparison against naive baselines
+- Trading signal simulation and metric evaluation
 
-All following **software engineering**, **MLOps**, and **static typing** best practices.
+All while following strong **software engineering**, **testing/CI**, **experiment reproducibility**, and **static typing** practices.
 
 ---
 
@@ -48,6 +48,7 @@ All following **software engineering**, **MLOps**, and **static typing** best pr
     ├── pipelines/      # Pipeline orchestrators
     ├── validation/     # Walk-forward CV and reporting
     ├── strategy/       # Trading signal rules
+    ├── execution/      # Fees, slippage and fill simulation
     ├── backtest/       # Ledger + PnL simulation + reports
     └── utils/          # Shared helpers
     tests/
@@ -159,8 +160,8 @@ Enable/disable from `training.experiments.enabled` in `configs/training.yaml`.
 ## Installation
 
 ```bash
-git clone https://github.com/ErikStream1/bitcoin-ml-pipeline.git
-cd bitcoin-ml-pipeline
+git clone https://github.com/ErikStream1/reproducible-ml-trading-pipeline.git
+cd reproducible-ml-trading-pipeline
 pip install -r requirements.txt
 ```
 
@@ -181,7 +182,10 @@ cfg = load_config(
     "configs/inference.yaml",
     "configs/strategy.yaml",
     "configs/execution.yaml",
-    "configs/backtest.yaml"
+    "configs/backtest.yaml",
+    "configs/bitso.yaml",
+    "configs/quotes.yaml",
+    "configs/logging.yaml"
 )
 
 run_training_pipeline(cfg)
