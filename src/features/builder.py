@@ -4,7 +4,7 @@ import numpy as np
 
 def build_features(df: FrameLike, cfg: ConfigLike) -> FrameLike:
     """
-    Create financial features from Bitcoin price data.
+    Create financial features.
 
     Features added:
 
