@@ -1,6 +1,6 @@
 # Pipelines
 
-This document describes the orchestration pipelines in **bitcoin_ml_pipeline**: what each pipeline does, which inputs it expects, and which artifacts it produces.
+This document describes the orchestration pipelines in **reproducible-ml-trading-pipeline**: what each pipeline does, which inputs it expects, and which artifacts it produces.
 
 ## Summary
 

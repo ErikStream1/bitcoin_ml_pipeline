@@ -1,7 +1,7 @@
 # Evaluation
 
 This document describes the evaluation utilities used to assess prediction quality in
-**bitcoin_ml_pipeline**. The evaluation module currently provides:
+**reproducible-ml-trading-pipeline**. The evaluation module currently provides:
 
 - MAE (Mean Absolute Error)
 - RMSE (Root Mean Squared Error)

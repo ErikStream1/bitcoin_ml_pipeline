@@ -1,6 +1,6 @@
 # Data
 
-This document describes the data layer in **bitcoin_ml_pipeline**: how raw market data is collected/loaded, how it is normalized into a tabular dataset, and what contracts downstream pipelines (features/training/backtest) can rely on.
+This document describes the data layer in **reproducible-ml-trading-pipeline**: how raw market data is collected/loaded, how it is normalized into a tabular dataset, and what contracts downstream pipelines (features/training/backtest) can rely on.
 
 ## Scope
 
