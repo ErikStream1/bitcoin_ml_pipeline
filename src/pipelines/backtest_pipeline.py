@@ -1,56 +1,17 @@
 from __future__ import annotations
 
-import json
 import logging
 from pathlib import Path
 
 import pandas as pd
 
-from src.backtest import (BacktestReport, run_backtest_threshold)
-from src.models import (LinearModel, XGBoostModel)
+from src.backtest import (BacktestReport, run_backtest_threshold, _save_backtest_artifacts)
 from src.pipelines import (run_data_pipeline, run_feature_pipeline)
+from src.models import _load_model
 from src.types import ConfigLike
 from src.utils import log_step
 
 logger = logging.getLogger(__name__)
-
-
-def _load_model(model_path: Path) -> LinearModel | XGBoostModel:
-    model_path_str = str(model_path)
-
-    if "linear" in model_path_str:
-        return LinearModel.load(model_path)
-    if "xgboost" in model_path_str:
-        return XGBoostModel.load(model_path)
-
-    raise ValueError(f"Model not found for path: {model_path_str}")
-
-
-def _save_backtest_artifacts(cfg: ConfigLike, report: BacktestReport) -> None:
-    artifacts_cfg = cfg.get("backtest", {}).get("artifacts", {})
-
-    output_dir = artifacts_cfg.get("output_dir")
-    if output_dir is None:
-        return
-
-    output_path = Path(output_dir)
-    output_path.mkdir(parents=True, exist_ok=True)
-
-    summary_filename = artifacts_cfg.get("summary_filename", "summary.json")
-    equity_filename = artifacts_cfg.get("equity_filename", "equity.csv")
-    trades_filename = artifacts_cfg.get("trades_filename", "trades.csv")
-
-    summary_path = output_path / summary_filename
-    equity_path = output_path / equity_filename
-    trades_path = output_path / trades_filename
-
-    with open(summary_path, "w", encoding="utf-8") as f:
-        json.dump(report.summary, f, indent=2)
-
-    report.ledger.equity.to_csv(equity_path, index=True)
-    report.ledger.trades.to_csv(trades_path, index=True)
-
-    logger.info("Backtest artifacts saved at %s", output_path)
 
 
 def run_backtest_pipeline(
@@ -95,6 +56,8 @@ def run_backtest_pipeline(
         )
 
     with log_step(logger, "Save artifacts", level=logging.DEBUG):
-        _save_backtest_artifacts(cfg, report)
-
+        output_path = _save_backtest_artifacts(cfg, report)
+        
+    logger.info("Backtest artifacts saved at %s", output_path)
+    
     return report
