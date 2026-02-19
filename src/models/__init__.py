@@ -12,7 +12,7 @@ from .base_model import (
 
 from .linear_model import LinearModel
 from .xgboost_model import XGBoostModel
-from .factory import build_model
+from .factory import build_model, _load_model
 
 __all__ = [
     "payloadLike",
@@ -22,7 +22,8 @@ __all__ = [
     "ModelInfo",
     "ModelLike",
     "BaseModel",
-    "build_model",
     "LinearModel",
-    "XGBoostModel"
+    "XGBoostModel",
+    "build_model",
+    "_load_model"
 ]
