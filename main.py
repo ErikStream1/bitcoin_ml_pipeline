@@ -3,7 +3,9 @@ from src.pipelines import (run_data_pipeline,
                            run_training_pipeline,
                            run_inference_pipeline,
                            run_model_validation_pipeline,
-                           run_collect_quotes_pipeline)
+                           run_collect_quotes_pipeline,
+                           run_realtime_simulation_step
+                           )
 from src.utils.logger import setup_logging
 import logging
 
@@ -21,6 +23,7 @@ def main():
         "configs/backtest.yaml",
         "configs/bitso.yaml",
         "configs/quotes.yaml",
+        "configs/realtime_simulation.yaml",     
         "configs/logging.yaml"
     )
 
