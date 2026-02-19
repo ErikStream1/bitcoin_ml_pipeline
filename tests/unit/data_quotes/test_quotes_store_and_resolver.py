@@ -58,6 +58,7 @@ def test_load_quotes_sorts_data_by_timestamp(monkeypatch: pytest.MonkeyPatch, tm
                 "ts_exchange": ["2024-01-01T02:00:00Z"],
                 "bid": [9.0],
                 "ask": [11.0],
+                "mid":[10.0]
             }
         ),
         str(second): pd.DataFrame(
@@ -65,6 +66,7 @@ def test_load_quotes_sorts_data_by_timestamp(monkeypatch: pytest.MonkeyPatch, tm
                 "ts_exchange": ["2024-01-01T01:00:00Z"],
                 "bid": [8.0],
                 "ask": [10.0],
+                "mid": [9.0]
             }
         ),
     }
