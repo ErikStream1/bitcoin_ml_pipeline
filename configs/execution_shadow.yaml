@@ -1,0 +1,5 @@
+execution_shadow:
+  artifacts:
+    output_dir: artifacts/execution_shadow
+    step_filename: last_step_with_execution.json
+    fills_filename: fills.csv
