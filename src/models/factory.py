@@ -29,7 +29,7 @@ def build_model(cfg : ConfigLike) -> ModelLike:
     elif model_type == "xgboost":
         model = XGBoostModel(params = params)
     
-    elif model == "":
+    else:
         raise ValueError(f"Model {model_type} not found.")
     
     return model
