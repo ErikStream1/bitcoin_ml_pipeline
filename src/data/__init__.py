@@ -16,7 +16,7 @@ from .quotes.quotes_store import (to_utc,
 from .quotes.collect_quotes import (_collect_ticker_rest,
                                    collect_quotes)
 
-from .load_data import load_btc_data
+from .load_data import load_btc_data_daily_candles, load_historic_btc_data
 from .validate_data import validate_btc_data
 
 __all__ = ["BitsoConfig",

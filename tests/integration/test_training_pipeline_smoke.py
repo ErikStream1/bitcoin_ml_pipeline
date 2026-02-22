@@ -10,11 +10,13 @@ from src.utils.fake_data import make_fake_ohlcv
 @pytest.mark.parametrize("cur_model",["linear_v1","xgboost_v1"])
 
 def test_training_pipeline_smoke(tmp_path:Path, 
-                                 cur_model:str):
+                                 cur_model:str,
+                                 monkeypatch)->None:
     cfg = {
         "data" : {
             "paths":{
-               "raw_path": str(tmp_path / "btc_usd.csv"), 
+               "raw_dir": str(tmp_path / "data" / "raw"),
+               "raw_path": str(tmp_path/"data"/"raw"), 
                "processed_path": str(tmp_path / "processed_btc_usd.csv"),
                "joblib_path": str(tmp_path / "artifacts/models/linear_model.joblib"),
             },
@@ -22,9 +24,12 @@ def test_training_pipeline_smoke(tmp_path:Path,
               "datetime_column": "Date",
               "target_column": "Close",  
             },
-            "update": {
-                "enabled": False
+           "market_data": {
+                "Symbol": {
+                    "BTC": "BTC-USD"
                 },
+                "interval": "1d"
+            },
         },
         "features":{
             "base_column": "Close",
@@ -108,14 +113,28 @@ def test_training_pipeline_smoke(tmp_path:Path,
         }
     }
     
-    df = make_fake_ohlcv(50)
-    raw_path = cfg["data"]["paths"]["raw_path"]
+    df = make_fake_ohlcv(51)
+    df_old = df.iloc[:50]
+    daily_candle = df.iloc[50:51]
+
+    raw_dir = Path(cfg["data"]["paths"]["raw_dir"])
+    raw_path_ = raw_dir / "candles_1d" / "symbol=BTC-USD"
+    raw_path_.mkdir(parents=True, exist_ok=True)
+    file_dir = raw_path_ / "historic_candles.csv"
+    df_old.to_csv(file_dir, index=False)
+
+    def fake_daily(*args, **kwargs):
+        return daily_candle
+    monkeypatch.setattr(
+        "src.pipelines.data_pipeline.load_btc_data_daily_candles",
+        fake_daily,
+    )
+    monkeypatch.setattr("src.pipelines.data_pipeline.load_btc_data_daily_candles",
+                         fake_daily)
     
-    df.to_csv(raw_path, index = False,)
     result_path, model = run_training_pipeline(cfg)
-    
     result_path = Path(str(result_path))
-    
+
     assert model is not None
     assert result_path.exists() == True
     exp_root = tmp_path / "artifacts/experiments"

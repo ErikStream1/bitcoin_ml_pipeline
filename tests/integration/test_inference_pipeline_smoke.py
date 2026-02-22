@@ -13,10 +13,11 @@ from src.utils.fake_data import make_fake_ohlcv
 
 def test_inference_pipeline_smoke(cur_model:str,
                                   tmp_path:Path,
-                                  ):
+                                  monkeypatch)->None:
     cfg: ConfigLike = {
         "data" : {
             "paths":{
+               "raw_dir": tmp_path / "data" / "raw",
                "raw_path": tmp_path / "btc_usd.csv",
                "processed_path": tmp_path / Path("processed_btc_usd.csv"),
                "predictions_path": tmp_path / "artifacts/predictions/btc_predictions.csv"
@@ -28,7 +29,12 @@ def test_inference_pipeline_smoke(cur_model:str,
             "update": {
                 "enabled": False
                 },
-           
+            "market_data": {
+                "Symbol": {
+                    "BTC": "BTC-USD"
+                },
+                "interval": "1d"
+            },
         },
         "features":{
             "base_column": "Close",
@@ -117,6 +123,10 @@ def test_inference_pipeline_smoke(cur_model:str,
         },
     }
     df = make_fake_ohlcv(n = 50, with_features=True)
+    monkeypatch.setattr(
+        "src.pipelines.inference_pipeline.run_data_pipeline",
+        lambda _cfg, tmp_output_path=None: df.copy(),
+    )
     df.to_csv(cfg["data"]["paths"]["raw_path"],index = False)
     params = cfg["models"]["xgboost_v1"]["params"]
     X = df[['Open', 'High', 'Low', 'Volume', 'LogReturn', 'MA_7', 'MA_30', 'Momentum_7']]
