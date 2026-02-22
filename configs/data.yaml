@@ -2,16 +2,19 @@ data:
   source: "csv"
   
   paths:  
-    raw_path: "data/raw/btc_usd.csv"
+    raw_path: "data/raw/"
     processed_path: "data/processed/processed_btc_usd.csv"
     features_path: "data/processed/with_features_btc_usd.csv"
     joblib_path: "artifacts/models/linear_model.joblib"
     predictions_path: "artifacts/predictions/btc_predictions.csv"
-
+  
+  market_data:
+    Symbol:
+      BTC: "BTC-USD"
+    interval: "1d"
+  
   schema:
     target_column: "LogReturn"
     drop_columns:
         -"Date"
         -"Return_1" # logreturns is an operation made on this column 
-  update:
-    enabled: true
