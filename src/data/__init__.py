@@ -32,6 +32,7 @@ __all__ = ["BitsoConfig",
            "QuoteStore",
            "_collect_ticker_rest",
            "collect_quotes",
-           "load_btc_data",
-           "validate_btc_data"
+           "validate_btc_data",
+           "load_btc_data_daily_candles",
+           "load_historic_btc_data"
            ]
