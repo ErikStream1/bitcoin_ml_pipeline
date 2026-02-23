@@ -6,7 +6,7 @@ from pathlib import Path
 import pandas as pd
 
 from src.data import load_quotes
-from src.pipelines import run_feature_pipeline
+from src.pipelines import run_data_pipeline, run_feature_pipeline
 from src.strategy import threshold_signal
 from src.backtest import RealtimeSimulationStepResult, _persist_step_result
 from src.models import _load_model
@@ -20,13 +20,13 @@ def run_realtime_simulation_step(
     model_path: Path | None = None,
 ) -> RealtimeSimulationStepResult:
     """
-    Simulate a single real-time decision step from collected quotes.
+    Simulate a single real-time decision step.
 
     The function:
-      1) Loads quote snapshots from parquet storage.
-      2) Builds features over the available quote history.
-      3) Predicts returns with the trained model.
-      4) Applies strategy rules and returns the latest target/action.
+      1) Loads historical market data and builds model features.
+      2) Predicts returns with the trained model.
+      3) Applies strategy rules and computes latest target/action.
+      4) Loads quotes for execution context (timestamp/bid/ask/mid).
     """
 
     rt_cfg = cfg.get("realtime_simulation", {})
@@ -40,16 +40,14 @@ def run_realtime_simulation_step(
         quote_series = load_quotes(out_dir=out_dir, book=book)
         quotes_df = quote_series.df.copy()
 
-    if len(quotes_df) < min_history_rows:
+    with log_step(logger, "Data pipeline"):
+        market = run_data_pipeline(cfg)
+    if len(market) < min_history_rows:
         raise ValueError(
-            f"Not enough quotes for simulation step. "
-            f"required={min_history_rows} got={len(quotes_df)}"
+            f"Not enough historical rows for simulation step. "
+            f"required={min_history_rows} got={len(market)}"
         )
 
-    with log_step(logger, "Prepare market frame"):
-        
-        market = quotes_df.rename(columns={"ts_exchange": "Date", "mid": "Close"})
-    
     with log_step(logger, "Features"):
         feat = run_feature_pipeline(market, cfg)
         feat = feat.dropna().reset_index(drop=True)
@@ -67,6 +65,17 @@ def run_realtime_simulation_step(
 
     with log_step(logger, "Load model"):
         model = _load_model(model_artifact_path)
+
+    with log_step(logger, "Check feature names", level=logging.DEBUG):
+        feature_names = None
+        if hasattr(model, "info") and getattr(model, "info") is not None:
+            feature_names = getattr(model.info, "feature_names", None)
+
+        if feature_names is not None and len(feature_names) > 0:
+            missing = [c for c in feature_names if c not in X.columns]
+            if missing:
+                raise ValueError(f"Inference is missing required feature columns: {missing}")
+            X = X.loc[:, list(feature_names)]
     
     with log_step(logger, "Predict"):
         y_pred = model.predict(X)

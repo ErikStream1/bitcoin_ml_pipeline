@@ -97,6 +97,16 @@ def test_run_realtime_simulation_step_generates_latest_action(
             "mid": [100.5, 101.5, 102.5, 103.5, 104.5, 105.5],
         }
     )
+    historic_df = pd.DataFrame(
+        {
+            "Date": pd.date_range("2024-01-01", periods=6, freq="D"),
+            "Open": [90, 91, 92, 93, 94, 95],
+            "High": [91, 92, 93, 94, 95, 96],
+            "Low": [89, 90, 91, 92, 93, 94],
+            "Close": [90.5, 91.5, 92.5, 93.5, 94.5, 95.5],
+            "Volume": [1000, 1005, 1010, 1015, 1020, 1025],
+        }
+    )
     
     
     dummy_model = DummyModel(
@@ -124,6 +134,10 @@ def test_run_realtime_simulation_step_generates_latest_action(
     monkeypatch.setattr(
         "src.data.quotes.quotes_resolver.load_quotes",
         lambda quotes_out_dir, book: QuoteSeries(df=quotes_df),
+    )
+    monkeypatch.setattr(
+        "src.pipelines.realtime_simulation_pipeline.run_data_pipeline",
+        lambda cfg: historic_df,
     )
     monkeypatch.setattr(
         "src.pipelines.realtime_simulation_pipeline._load_model",
@@ -156,6 +170,16 @@ def test_run_realtime_simulation_step_raises_for_short_history(
             "mid": [100.5, 101.5, 102.5],
         }
     )
+    historic_df = pd.DataFrame(
+        {
+            "Date": pd.date_range("2024-01-01", periods=3, freq="D"),
+            "Open": [90, 91, 92],
+            "High": [91, 92, 93],
+            "Low": [89, 90, 91],
+            "Close": [90.5, 91.5, 92.5],
+            "Volume": [1000, 1005, 1010],
+        }
+    )
     book = quotes_cfg["book"]
     date = "2000-01-01"
     data_now = date + "000000"
@@ -174,6 +198,10 @@ def test_run_realtime_simulation_step_raises_for_short_history(
         "src.data.quotes.quotes_resolver.load_quotes",
         lambda out_dir, book: QuoteSeries(df=quotes_df),
     )
+    monkeypatch.setattr(
+        "src.pipelines.realtime_simulation_pipeline.run_data_pipeline",
+        lambda cfg: historic_df,
+    )
 
-    with pytest.raises(ValueError, match="Not enough quotes"):
+    with pytest.raises(ValueError, match="Not enough historical rows"):
         run_realtime_simulation_step(cfg)
