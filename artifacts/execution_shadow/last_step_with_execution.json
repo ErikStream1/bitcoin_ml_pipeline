@@ -1,0 +1,16 @@
+{
+  "timestamp": "2026-02-24T21:17:24+00:00",
+  "bid": 64084.0,
+  "ask": 64120.0,
+  "mid": 64102.0,
+  "predicted_return": -0.01734578236937523,
+  "target_position": 0,
+  "action": "HOLD",
+  "execution": {
+    "fills_count": 0,
+    "has_position_change": false,
+    "notional_executed": 0.0,
+    "fees_paid": 0.0,
+    "fills_filename": "fills.csv"
+  }
+}

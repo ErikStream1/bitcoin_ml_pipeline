@@ -1,6 +1,6 @@
 {
   "model_artifact_path": "artifacts\\models\\xgboost_model.joblib",
-  "n_rows": 4015,
+  "n_rows": 4023,
   "n_features": 17,
   "columns": [
     "Open",

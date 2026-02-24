@@ -36,7 +36,7 @@ def _collect_ticker_rest(cqc_obj:CollectQuotesConfig, client:BitsoClient, store:
             out_path = store.write_chunk(buffer)
             logger.debug("Wrote %d quotes -> %s", len(buffer), out_path)
             buffer.clear()
-            
+            return
         time.sleep(poll_interval_s)
             
 def collect_quotes(cfg: ConfigLike):
