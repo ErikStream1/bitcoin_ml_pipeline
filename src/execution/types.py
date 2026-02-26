@@ -26,3 +26,12 @@ class ShadowExecutionResult:
     fills_count: int
     has_position_change: bool
     artifact_dir: str | None
+
+@dataclass(frozen=True)
+class PaperTradingResult:
+    step: RealtimeSimulationStepResult
+    previous_position: int
+    target_position: int
+    fills_count: int
+    blotter_path: str
+    state_path: str

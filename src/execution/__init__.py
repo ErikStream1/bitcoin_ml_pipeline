@@ -2,7 +2,8 @@ from .types import (OrderSide,
                     Fill,
                     PositionLike,
                     FillVectorLike,
-                    ShadowExecutionResult)
+                    ShadowExecutionResult,
+                    PaperTradingResult)
 
 from .fills import(
     fill_price_next_close,
@@ -17,13 +18,17 @@ from .fees import fee_proportional
 from .simulator import simulate_fills_from_target_position
 
 from .reporting.persist_shadow_artifacts import _persist_shadow_execution_artifacts
-
+from .reporting.paper_trading_store import(_paper_trading_paths,
+                                           _load_previous_position,
+                                           _append_paper_trading_rows
+                                            )
 __all__ = [
            "OrderSide", 
            "Fill",
            "PositionLike",
            "FillVectorLike",
            "ShadowExecutionResult",
+           "PaperTradingResult",
            "fill_price_next_close",
            "fill_price_mid",
            "fill_price_bid_ask",
@@ -31,4 +36,8 @@ __all__ = [
            "slippage_bps",
            "fee_proportional",
            "simulate_fills_from_target_position",
-           "_persist_shadow_execution_artifacts"]
+           "_persist_shadow_execution_artifacts",
+           "_paper_trading_paths",
+           "_load_previous_position",
+           "_append_paper_trading_rows"
+           ]

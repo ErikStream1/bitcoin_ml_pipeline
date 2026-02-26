@@ -1,0 +1,7 @@
+paper_trading:
+  collect_quotes_first: true
+  artifacts:
+    output_dir: artifacts/paper_trading
+    blotter_filename: blotter.csv
+    fills_filename: fills.csv
+    state_filename: state.json
