@@ -18,8 +18,8 @@ def load_btc_data_daily_candles(
             progress=False,
     )
     
-    if df is None:
-        return pd.DataFrame()
+    if df is None or df.empty:
+        return pd.DataFrame(columns=COL_NAMES)
     
     df = df.reset_index()
     df.columns = COL_NAMES
@@ -34,8 +34,8 @@ def load_historic_btc_data(
 
     df = yf.download(ticker, start=start, end=end, progress=False)
     
-    if df is None:
-        return pd.DataFrame()
+    if df is None or df.empty:
+        return pd.DataFrame(columns=COL_NAMES)
     
     df = df.reset_index()
     df.columns = COL_NAMES
