@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-from src.backtest.metrics import turnover_from_position
 from src.types import ConfigLike, SeriesLike, FrameLike, Prediction
 
 from src.strategy import threshold_signal

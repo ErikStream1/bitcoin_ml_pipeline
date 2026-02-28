@@ -5,7 +5,7 @@ from pathlib import Path
 
 import pandas as pd
 
-from src.backtest import RealtimeSimulationStepResult
+from src.execution import RealtimeSimulationStepResult
 from src.types import ConfigLike, FrameLike
 
 def _paper_trading_paths(cfg: ConfigLike) -> tuple[Path, Path, Path]:

@@ -3,7 +3,7 @@ from typing import TypeAlias, Sequence
 from dataclasses import dataclass
 from enum import Enum
 from src.types import SeriesLike, IntArray
-from src.backtest import RealtimeSimulationStepResult
+
 
 class OrderSide(str, Enum):
     BUY = "buy"
@@ -26,6 +26,16 @@ class ShadowExecutionResult:
     fills_count: int
     has_position_change: bool
     artifact_dir: str | None
+
+@dataclass(frozen=True)
+class RealtimeSimulationStepResult:
+    timestamp: str
+    bid: float
+    ask: float
+    mid: float
+    predicted_return: float
+    target_position: int
+    action: str
 
 @dataclass(frozen=True)
 class PaperTradingResult:

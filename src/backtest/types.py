@@ -17,12 +17,3 @@ class BacktestReport:
     ret: SeriesLike
     summary: SummaryLike
     
-@dataclass(frozen=True)
-class RealtimeSimulationStepResult:
-    timestamp: str
-    bid: float
-    ask: float
-    mid: float
-    predicted_return: float
-    target_position: int
-    action: str

@@ -8,7 +8,8 @@ import pandas as pd
 from src.data import load_quotes
 from src.pipelines import run_data_pipeline, run_feature_pipeline
 from src.strategy import threshold_signal
-from src.backtest import RealtimeSimulationStepResult, _persist_step_result
+from src.backtest import _persist_step_result
+from src.execution import RealtimeSimulationStepResult
 from src.models import _load_model
 from src.types import ConfigLike
 from src.utils import log_step

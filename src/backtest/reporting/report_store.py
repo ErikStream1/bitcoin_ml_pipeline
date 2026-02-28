@@ -1,6 +1,6 @@
 from __future__ import annotations
 from src.types import ConfigLike, SeriesLike, FrameLike
-from src.backtest import RealtimeSimulationStepResult
+from src.execution import RealtimeSimulationStepResult
 from dataclasses import asdict
 import json
 import pandas as pd

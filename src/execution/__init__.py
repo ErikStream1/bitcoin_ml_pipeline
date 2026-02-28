@@ -3,6 +3,7 @@ from .types import (OrderSide,
                     PositionLike,
                     FillVectorLike,
                     ShadowExecutionResult,
+                    RealtimeSimulationStepResult,
                     PaperTradingResult)
 
 from .fills import(
@@ -28,6 +29,7 @@ __all__ = [
            "PositionLike",
            "FillVectorLike",
            "ShadowExecutionResult",
+           "RealtimeSimulationStepResult",
            "PaperTradingResult",
            "fill_price_next_close",
            "fill_price_mid",

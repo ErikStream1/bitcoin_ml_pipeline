@@ -1,7 +1,7 @@
 from __future__ import annotations
 from dataclasses import asdict
 from src.types import ConfigLike
-from src.backtest import RealtimeSimulationStepResult
+from src.execution import RealtimeSimulationStepResult
 from pathlib import Path
 
 import pandas as pd

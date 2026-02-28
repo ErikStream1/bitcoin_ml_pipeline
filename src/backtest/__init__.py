@@ -1,6 +1,6 @@
 from .types import (BacktestReport,
                     LedgerResult,
-                    RealtimeSimulationStepResult)
+                    )
 
 from .ledger import (run_ledger,)
 
@@ -17,7 +17,6 @@ from .reporting.persist_backtest_artifacts import _save_backtest_artifacts
 __all__ = [
     "BacktestReport",
     "LedgerResult",
-    "RealtimeSimulationStepResult",
     "run_backtest_threshold",
     "run_ledger",
     "returns_from_equity",
