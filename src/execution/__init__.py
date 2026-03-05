@@ -4,7 +4,9 @@ from .types import (OrderSide,
                     FillVectorLike,
                     ShadowExecutionResult,
                     RealtimeSimulationStepResult,
-                    PaperTradingResult)
+                    PaperTradingResult,
+                    BitsoBrokerError,
+                    BitsoOrderResponse)
 
 from .fills import(
     fill_price_next_close,
@@ -41,5 +43,7 @@ __all__ = [
            "_persist_shadow_execution_artifacts",
            "_paper_trading_paths",
            "_load_previous_position",
-           "_append_paper_trading_rows"
+           "_append_paper_trading_rows",
+           "BitsoBrokerError",
+           "BitsoOrderResponse"
            ]
