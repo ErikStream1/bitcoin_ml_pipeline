@@ -1,5 +1,5 @@
 from __future__ import annotations
-from typing import TypeAlias, Sequence
+from typing import Any, TypeAlias, Sequence
 from dataclasses import dataclass
 from enum import Enum
 from src.types import SeriesLike, IntArray
@@ -45,3 +45,12 @@ class PaperTradingResult:
     fills_count: int
     blotter_path: str
     state_path: str
+    
+class BitsoBrokerError(RuntimeError):
+    """Raised when an authenticated bitso broker request fails."""
+
+@dataclass(frozen = True)
+class BitsoOrderResponse:
+    oid: str | None
+    status: str
+    raw: dict[str, Any]
