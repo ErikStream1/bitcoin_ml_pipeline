@@ -1,0 +1,6 @@
+live_broker:
+  collect_quotes_first: true
+  dry_run: true
+  client:
+    base_url: "https://api.bitso.com/v3"
+    timeout_s: 10.0
