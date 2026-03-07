@@ -26,6 +26,8 @@ from .reporting.paper_trading_store import(_paper_trading_paths,
                                            _load_previous_position,
                                            _append_paper_trading_rows
                                             )
+from .brokers.bitso_brokers import BitsoBrokerClient
+
 __all__ = [
            "OrderSide", 
            "Fill",
@@ -34,6 +36,9 @@ __all__ = [
            "ShadowExecutionResult",
            "RealtimeSimulationStepResult",
            "PaperTradingResult",
+           "BitsoBrokerError",
+           "BitsoOrderResponse",
+           "LiveBrokerOrderResult",
            "fill_price_next_close",
            "fill_price_mid",
            "fill_price_bid_ask",
@@ -45,7 +50,5 @@ __all__ = [
            "_paper_trading_paths",
            "_load_previous_position",
            "_append_paper_trading_rows",
-           "BitsoBrokerError",
-           "BitsoOrderResponse",
-           "LiveBrokerOrderResult"
+           "BitsoBrokerClient",
            ]
