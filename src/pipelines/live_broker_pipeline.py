@@ -84,7 +84,7 @@ def run_live_broker_pipeline(
         )
 
     with log_step(logger, "Submit live Bitso market order"):
-        client = BitsoBrokerClient(cfg["live_broker"]["client"])
+        client = BitsoBrokerClient(cfg)
         order = client.place_market_order(book=cfg["quotes"]["book"], side=side, major=qty)
 
     return LiveBrokerOrderResult(
